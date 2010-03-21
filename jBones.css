@@ -1,0 +1,242 @@
+body {
+	font: 90% "Arial";
+	position: relative;
+	background: #000;
+	color: #fff;
+	margin: 0px;
+	padding: 10px 0px 130px 0px;
+	text-align: center;
+}
+textarea,
+input,
+body {
+	font: 90% "Arial";
+}
+button {
+	height: 60px;
+	width: 60px;
+	float: left;
+	font-size: 1.1em;
+	font-weight: bold;
+	margin-left: 10px;
+}
+
+a:links,
+a:visited {
+	color: #0F0;
+	text-decoration: underline;
+}
+ul {
+	margin: 0;
+}
+.clear {
+	height: 1px;
+	clear: both;
+}
+.page {
+	position: relative;
+	text-align: left;
+	width: 960px;
+	margin: 0px auto;
+}
+
+a:visited,
+a:link {
+	color: #9f9;
+	text-decoration: underline;
+}
+
+h1 {
+	margin: 0px;
+	padding: 0px;
+	text-indent: -1000em;
+}
+h1, h2, h3 {
+	position: relative;
+}
+h2 {
+	font-size: 1.3em;
+	margin: 0px 0px 5px 0px;
+}
+.backgroundFade {
+	position: absolute;
+	width: 100%;
+	top: 0px;
+	height: 268px;
+	background: url(./images/sprites8bit.png) 0px 0px repeat-x;
+}
+.section {
+	position: relative;
+	width: 100%;
+	z-index: 100;
+	margin-bottom: 10px;
+}
+.dryBones {
+	position: absolute;
+	right: 10px;
+	top: 12px;
+	width: 210px;
+	height: 176px;
+	background: url(./images/sprites8bit.png) 0px -349px no-repeat;
+	z-index: 90;
+}
+.logo {
+	position: relative;
+	width: 220px;
+	height: 80px;
+	display: block;
+	background: url(./images/sprites8bit.png) -10px -264px no-repeat;
+}
+.description {
+	position: absolute;
+	top: 0px;
+	padding-left: 20px;
+	border-left: 1px solid #333;
+	left: 200px;
+	width: 470px;
+	display: block;
+	font-size: 0.9em;
+	line-height: 1.3em;
+	color: #CCC;
+}
+.description strong {
+	color: #fff;
+}
+textarea {
+	width: 100%;
+	background: url(./images/sprites8bit.png) 0px -533px no-repeat;
+	border: none;
+	padding: 5px 0px 0px 5px;
+}
+.inputSection {
+	width: 770px;
+}
+.resultsSection {
+	float: left;
+	width: 210px;
+	margin-right: 10px;
+	clear: left;
+}
+
+.highlightsSection {
+	float: left;
+	width: 720px;
+}
+#input {
+	float: left;
+	width: 695px;
+	height: 52px;
+}
+#resultsList {
+	list-style: none;
+	overflow: hidden;
+	padding: 0px;
+	margin: 10px 0px 0px 0px;
+}
+#resultsList li {
+	position: relative;
+	cursor: pointer;
+	list-style: none;
+	padding: 3px;
+	margin: 0xp;
+}
+#resultsList li.highlighted {
+	font-weight: bold;
+	background: #444;
+	left: 5px;
+}
+#resultsList li a:visited,
+#resultsList li a:link {
+	display: block;
+}
+#resultsList li a:hover {
+	background: #222;
+}
+#resultsList li.highlighted a:hover {
+	background: #666;
+}
+#highlights {
+	color: #999;
+	font-size: 0.8em;
+	line-height: 1.5em;
+}
+#highlights .word {
+	font-weight: bold;
+	cursor: pointer;
+	padding: 0px 1px;
+}
+#highlights .lesser {
+	color: #555 !important;
+}
+#highlights .word:hover {
+	color: #fff;
+	background: #444;
+}
+#highlights .highlighted {
+	color: #000 !important;
+	background: #fff;
+}
+#highlights a:visited,
+#highlights a:link {
+	text-decoration: none;
+	color: #fff;
+}
+#highlights .highlighted:hover {
+	color: #fff !important;
+}
+
+
+.ratioBar {
+	position: relative;
+	top: 0px;
+	width: 98%;
+	background: #333;
+	height: 16px;
+}
+.ratioBackground {
+	position: absolute;
+	top: 0px;
+	height: 100%;
+	width: 100%;
+	background: #444;
+	border-top: 1px solid #222;
+	border-left: 1px solid #222;
+	border-right: 1px solid #666;
+	border-bottom: 1px solid #666;
+	padding: 1px;
+}
+.ratio {
+	position: absolute;
+	height: 100%;
+	background: #0C0;
+	border-top: 2px solid #0F0;
+	border-left: 2px solid #0F0;
+	border-right: 2px solid #070;
+	border-bottom: 2px solid #070;
+}
+.ratioLabel {
+	position: absolute;
+	top: 1px;
+	width: 100%;
+	text-align: center;
+	color: #fff;
+	font-weight: bold;
+	font-size: 1.05em; 
+	display: block;
+	z-index: 1000;
+}
+.ratioLabelShadow {
+	position: absolute;
+	top: 2px;
+	left: 1px;
+	width: 100%;
+	text-align: center;
+	color: #060;
+	font-weight: bold;
+	font-size: 1.05em; 
+	display: block;
+	z-index: 980;
+}
+
+
+

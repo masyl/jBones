@@ -1,0 +1,121 @@
+﻿<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN"
+	"http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml" xml:lang="en">
+	<head>
+		<link rel="stylesheet" href="jBones.css" type="text/css" media="screen" />
+		<script type="text/javascript" src="./libs/jquery/jquery.1.3.2.min.js"></script>
+		<script type="text/javascript" src="./src/jBones.js"></script>
+		<script type="text/javascript">
+			//<![CDATA[
+(function($) {
+
+	function makeHighlightable(sources, economies, lesserWords) {
+		var word, tempSources;
+		tempSources = sources.replace(/</gi, "&lt;");
+		/*
+		for (word in lesserWords) {
+			tempSources = tempSources.replace(new RegExp(word, "gi"), "<span class='lesser'>" + word + "</span>");
+		}
+		*/
+		$.each(economies, function() {
+			tempSources = tempSources.replace(new RegExp(this.word, "gi"), "<a href='#' rel='" + this.word + "' class='word'>" + this.word + "</a>");
+		});
+		tempSources = tempSources.replace(/}/gi, " } ");
+		tempSources = tempSources.replace(/{/gi, " { ");
+		tempSources = tempSources.replace(/,/gi, ", ");
+		tempSources = tempSources.replace(/;/gi, "; ");
+		tempSources = tempSources.replace(/=/gi, " = ");
+		tempSources = tempSources.replace(/:/gi, " : ");
+		tempSources = tempSources.replace(/  /gi, " ");
+		return tempSources;
+	}
+	function highlightWord(word) {
+		$("#highlights .word").each(function() {
+			if ($(this).attr("rel") === word) {
+				$(this).addClass("highlighted");
+			} else {
+				$(this).removeClass("highlighted");
+			}
+		});
+	}
+	$(document).ready(function(){
+		var bones = new jBones(jBonesOptions);
+		$("#submit").click(function(){
+			var sources,
+				$keyword
+			sources = $("#input").val();
+			bones(sources);
+			var $results = $("#resultsList");
+			$results.empty();
+			var ratio = bones.economyRatio();
+			var $resultsSection = $(".resultsSection").eq(0)
+			$resultsSection.hide();
+			$("#economyRatioContainer").replaceWith("<div class='ratioBar'><div class='ratioBackground'></div><div style='width:" + ratio + "%' class='ratio'></div><span class='ratioLabel'>" + ratio + "%</span><span class='ratioLabelShadow'>" + ratio + "%</span></div>");
+			$.each(bones.economies(), function() {
+				var $this = this;
+				$keyword = $("<li><a href='#'>" + this.economy + " - " + this.word + " (" + this.count + ")</a></li>");
+				$("a", $keyword).click(function(e){
+					e.preventDefault();
+					//$(this).addClass("highlighted");
+					highlightWord($this.word);
+				});
+				$keyword.appendTo($results);
+			});
+			$resultsSection.fadeIn("slow");
+			var $highlights = $("<div>" + makeHighlightable(sources, bones.economies(), bones.options.dontCount) + "</div>");
+			console.log($highlights);
+			var $highlightsSection = $(".highlightsSection").eq(0);
+			$highlightsSection.hide();
+			$highlights.appendTo($("#highlights").empty());
+			$highlightsSection.fadeIn("slow");
+			$("#highlights").click(function (e) {
+				e.preventDefault();
+				if ($(e.originalTarget).hasClass("word")) {
+					highlightWord($(e.originalTarget).attr("rel"));
+				};
+			})
+		});
+	});
+
+})(jQuery);
+
+			//]]>
+		</script>
+	</head>
+	<body onload="console.log('window.onload() done!')">
+		<div class="backgroundFade"></div>
+		<div class="page">
+			<div class="dryBones"></div>
+			<h1 class="logo">jBones</h1>
+			<blockquote class="description">
+				<p>
+					<strong>jBones</strong> is a web developer tool that helps you understand how your <strong>compressed javascript code</strong>
+					could be better compressed. Simply copy-paste already compressed code in the textbox and <strong>press
+					"Go"</strong> to find out.
+				</p>
+			</blockquote>
+			<div class="section inputSection">
+				<h2>Paste you code here:</h2>
+	<textarea id="input">
+	"use strict";(function(){window.Crutch=function(b){var c,j,i,a,k,e,d="undefined",f;j=function s(t){if(k.enabled){j.attachAll(t)}};c={};c.extend=function p(v,t){var u;if(arguments.length>2){for(u=1;u<arguments.length;u=u+1){p(v,arguments[u])}}else{for(u in t){if(t.hasOwnProperty(u)){v[u]=t[u]}}}return v};c.leaf=function m(w,v,t){var u,x;if(typeof(w)!==d){if(v.length>1){x=v.shift();u=w[x];if(typeof(u)!==d){if(t!==""){t=t+"."}return m(u,v,t+x)}else{throw ("Var not in scope: "+x+" in "+t)}}else{if(typeof(w[v[0]])!==d){return[w,v[0]]}else{throw ("Var not found: "+v[0]+" on "+t)}}}else{throw ("Scope is empty")}};i={enabled:true,warn:true,log:true,hooks:{}};a={enabled:true,warn:true,time:false,log:false,hush:false,selfCrutch:false};k=c.extend({},i,b);j.hooks=[];f=function(){};e=(k.console)?k.console:{log:f,error:f,time:f,timeEnd:f};j.attachAll=function h(t){for(var u in k.hooks){if(k.hooks.hasOwnProperty(u)){j.attach(u,k.hooks[u],t)}}};j.attach=function o(w,B,A){var y,v,z,t,u;v=this;y=c.extend({},a,B);if(y.enabled!==false){t=w.split(".");z=c.leaf(A,t,"");if(z.length>0){u=z[0][z[1]];z[0][z[1]]=function x(){return j.proxy.call(z[0],u,arguments,w,y)};if(u&&!y.selfCrutch){j.hooks.push({hook:w,options:y,parent:z[0],fnName:z[1],fn:u,scope:A})}return u}}};j.detach=function r(t){if(t){t.parent[t.fnName]=t.fn}};j.detachAll=function g(){while(j.hooks.length>0){j.detach(j.hooks.shift())}};j.env=function n(z,x,t,v,y,u,w){return{hook:z,"return":x,"this":t,options:v,"function":y,"arguments":u,exception:w}};j.proxy=function l(y,w,z,v){var x,u,t;if(v.time){e.time("Timed "+v.action)}u=(v.action||z+"()");try{x=y.apply(this,w);if(l.error){throw (l.error)}if(v.log){e.info("Ok upon "+u,j.env(z,x,this,v,y,w))}}catch(A){if(v.log||v.warn){e.error("Error upon "+u,j.env(z,x,this,v,y,w,A))}if(typeof(k.onError)==="function"){k.onError(j.env(z,x,this,v,y,w,A))}if(!v.hush){throw (A)}else{t=l.caller;while(t){if(t.isCrutchProxy){break}t=t.caller}if(t){t.error=A}}}finally{if(v.time){e.timeEnd("Timed "+u)}return x}};j.proxy.isCrutchProxy=true;function q(){var t;t=["U.extend","U.leaf","C.attach","C.attachAll","C.detach","C.detachAll","C.crutch"];while(t.length){j.attach(t.shift,{hush:true,selfCrutch:true},{C:j,U:c})}}return j}}());
+	</textarea>
+				<button id="submit">Go!</button>
+				<div class="clear"></div>
+			</div>
+			<div class="section resultsSection">
+				<h2>Economies</h2>
+				<div id="economyRatioContainer"></div>
+				<ul id="resultsList">
+					<p>For results pase your code in the field above and click "Skin that puppy!"</p>
+				</ul>
+			</div>
+			<div class="section highlightsSection">
+				<h2>Highlights</h2>
+				<div id="highlights">
+	
+				</div>
+			</div>
+		</div>
+		<div class="clear"></div>
+	</body>
+</html>
